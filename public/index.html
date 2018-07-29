@@ -9,18 +9,23 @@
 <body>
 
 <div>
-    <button onclick="send()">Send</button>
-    <label for="data-to-send">Data to send</label>
-    <input id="data-to-send"/>
+    <button onclick="reset()">reset</button>
+    <p>
+      Counter: <label id="counter-label"></label>
+    </p>
 </div>
 
 <script>
   const socket = io();
-  function send() {
-    const data = document.getElementById('data-to-send').value;
-    console.log('sending: ' + data);
-    socket.emit('some event', data);
+
+  function reset() {
+    console.log('sending reset event');
+    socket.emit('reset event');
   }
+  socket.on('counter', (data) => {
+    document.getElementById('counter-label').innerHTML = data;
+  });
+
 </script>
 
 </body>
